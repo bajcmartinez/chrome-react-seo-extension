@@ -4,6 +4,7 @@ import { DOMMessage, DOMMessageResponse } from './types';
 
 function App() {
   const [title, setTitle] = React.useState('');
+  const [headlines, setHeadlines] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     /**
@@ -26,6 +27,7 @@ function App() {
         { type: 'GET_DOM' } as DOMMessage,
         (response: DOMMessageResponse) => {
           setTitle(response.title);
+          setHeadlines(response.headlines);
         });
     });
   });
@@ -38,8 +40,8 @@ function App() {
         <li className="SEOValidation">
           <div className="SEOValidationField">
             <span className="SEOValidationFieldTitle">Title</span>
-            <span className="SEOValidationFieldStatus Error">
-              90 Characters
+            <span className={`SEOValidationFieldStatus ${title.length < 30 || title.length > 65 ? 'Error' : 'Ok'}`}>
+              {title.length} Characters
             </span>
           </div>
           <div className="SEOVAlidationFieldValue">
@@ -49,15 +51,14 @@ function App() {
 
         <li className="SEOValidation">
           <div className="SEOValidationField">
-            <span className="SEOValidationFieldTitle">Number of Headings</span>
-            <span className="SEOValidationFieldStatus Ok">
-              Ok
+            <span className="SEOValidationFieldTitle">Main Heading</span>
+            <span className={`SEOValidationFieldStatus ${headlines.length !== 1 ? 'Error' : 'Ok'}`}>
+              {headlines.length}
             </span>
           </div>
           <div className="SEOVAlidationFieldValue">
             <ul>
-              <li>1 H1</li>
-              <li>3 H2</li>
+              {headlines.map((headline, index) => (<li key={index}>{headline}</li>))}
             </ul>
           </div>
         </li>
