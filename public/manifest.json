@@ -2,17 +2,15 @@
   "name": "Chrome React SEO Extension",
   "description": "The power of React and TypeScript for building interactive Chrome extensions",
   "version": "1.0",
-  "manifest_version": 2,
-  "browser_action": {
+  "manifest_version": 3,
+  "action": {
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["./static/js/content.js"],
-      "all_frames": false,
-      "run_at": "document_end"
+      "js": ["./static/js/content.js"]
     }
   ],
   "permissions": [
